@@ -26,6 +26,16 @@ async function bootstrap() {
 
   SwaggerModule.setup('api', app, document);
 
+  app.enableCors({
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:8080',
+      'http://localhost:5173',
+      'https://yourfrontend.com',
+    ],
+    credentials: true,
+  });
+
   // Enable NestJS shutdown hooks to gracefully clean up resources (like database connections)
   app.enableShutdownHooks();
 
