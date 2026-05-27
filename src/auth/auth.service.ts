@@ -49,7 +49,14 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    return this.generateTokens(user.id, user.email);
+    return {
+      user: {
+        id: user.id,
+        fullName: user.fullName,
+        email: user.email,
+      },
+      token: await this.generateTokens(user.id, user.email),
+    };
   }
 
   async generateTokens(userId: string, email: string) {
