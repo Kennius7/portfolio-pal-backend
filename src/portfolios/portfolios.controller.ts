@@ -13,13 +13,13 @@ import { CreatePortfolioDto } from './dto/create-portfolio.dto';
 export class PortfoliosController {
   constructor(private readonly portfoliosService: PortfoliosService) {}
 
-  @Post()
+  @Post('create')
   @ApiOperation({ summary: 'Create portfolio' })
   create(@Body() body: CreatePortfolioDto) {
     return this.portfoliosService.createPortfolio(body);
   }
 
-  @Get()
+  @Get('get-all')
   @ApiOperation({ summary: 'Get all portfolios' })
   findAll() {
     return this.portfoliosService.getAllPortfolios();

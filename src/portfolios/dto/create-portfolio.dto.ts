@@ -4,12 +4,13 @@ import { IsOptional, IsString } from 'class-validator';
 export class CreatePortfolioDto {
   @ApiProperty({
     example: 'My Developer Portfolio',
+    required: true,
   })
   @IsString()
   title: string;
 
   @ApiProperty({
-    example: 'Frontend Engineer',
+    example: "I'm a Frontend Engineer with 4+ years experience",
     required: false,
   })
   @IsOptional()

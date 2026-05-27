@@ -1,23 +1,75 @@
-// import { Controller } from '@nestjs/common';
-
-// @Controller('user')
-// export class UserController {}
-
 import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt.guard';
-import { CurrentUserDto } from './dto/current_user.dto';
+// import { CurrentUserDto } from './dto/current_user.dto';
+import { UserService } from './user.service';
+import { Request } from 'express';
+import {
+  ApiBearerAuth,
+  // ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 
+interface AuthenticatedRequest extends Request {
+  user: {
+    userId: string;
+    email: string;
+  };
+}
+
+@ApiTags('User')
 @Controller('users')
 export class UserController {
+  constructor(private readonly userService: UserService) {}
+
   @UseGuards(JwtAuthGuard)
-  @Get('get_current_user')
-  getProfile(@Req() req: CurrentUserDto) {
+  @Get('get-current-user')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get current user' })
+  // @ApiOkResponse({
+  //   type: [
+  //     {
+  //       userId: 'string',
+  //       email: 'string',
+  //       fullName: 'string',
+  //     },
+  //   ],
+  // })
+  async getProfile(@Req() req: AuthenticatedRequest): Promise<{
+    userId: string;
+    email: string;
+    fullName: string;
+  }> {
+    const user = await this.userService.getCurrentUser(req.user.userId);
+    // const authHeader = req.headers.authorization;
+    // const accessToken = authHeader ? authHeader.split(' ')[1] : '';
+
     return {
-      userId: req.userId,
-      email: req.email,
-      fullName: req.fullName,
-      accessToken: req.accessToken,
-      refreshToken: req.refreshToken,
+      userId: user.id,
+      email: user.email,
+      fullName: user.fullName,
+      // accessToken,
+      // refreshToken: '',
     };
+  }
+
+  @Get('get-all-users')
+  @ApiOperation({ summary: 'Get all users' })
+  async getAllUsers(): Promise<
+    {
+      userId: string;
+      email: string;
+      fullName: string;
+    }[]
+  > {
+    const users = await this.userService.getAllUsers();
+
+    return users.map((user) => {
+      return {
+        userId: user.id,
+        email: user.email,
+        fullName: user.fullName,
+      };
+    });
   }
 }
