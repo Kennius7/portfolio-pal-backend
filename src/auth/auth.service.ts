@@ -26,6 +26,7 @@ export class AuthService {
     const user = await this.prisma.user.create({
       data: {
         email: dto.email,
+        username: dto.username,
         fullName: dto.fullName,
         password: hashedPassword,
       },
@@ -64,12 +65,12 @@ export class AuthService {
 
     const accessToken = this.jwt.sign(payload, {
       secret: process.env.JWT_SECRET,
-      expiresIn: '15m',
+      expiresIn: '30mins',
     });
 
     const refreshToken = this.jwt.sign(payload, {
       secret: process.env.JWT_REFRESH_SECRET,
-      expiresIn: '7d',
+      expiresIn: '1d',
     });
 
     // hash refresh token before saving

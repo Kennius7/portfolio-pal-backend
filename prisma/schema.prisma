@@ -18,6 +18,7 @@ model User {
   id            String   @id @default(cuid())
   email         String   @unique
   password      String
+  username      String?   @default("portfolio-pal-user")
   fullName      String
   refreshToken  String?  // hashed refresh token
   createdAt     DateTime @default(now())
@@ -32,6 +33,13 @@ model Portfolio {
   bio         String?
   theme       String?
   published   Boolean  @default(false)
+  tagline     String?
+  greeting    String?
+  bioShort    String?
+  bioLong     String?
+  whatsapp    String?
+  email       String?
+  avatarUrl   String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
 
@@ -39,6 +47,7 @@ model Portfolio {
   user        User @relation(fields: [userId], references: [id])
 
   projects    Project[]
+  skills      Skill[]
 }
 
 model Project {
@@ -48,6 +57,20 @@ model Project {
   imageUrl    String?
   liveUrl     String?
   githubUrl   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  portfolioId String
+  portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
+}
+
+model Skill {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  level       Int
+  imageUrl    String?
+  category    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
 

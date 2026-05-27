@@ -15,6 +15,12 @@ export class RegisterDto {
   fullName: string;
 
   @ApiProperty({
+    example: 'john_doe',
+  })
+  @IsString()
+  username: string;
+
+  @ApiProperty({
     example: 'Password28!',
   })
   @IsString()
