@@ -54,6 +54,7 @@ export class AuthService {
       user: {
         id: user.id,
         fullName: user.fullName,
+        username: user.username,
         email: user.email,
       },
       token: await this.generateTokens(user.id, user.email),
