@@ -12,6 +12,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -20,10 +21,10 @@ model User {
   password      String
   username      String   @unique @default("portfolio-pal-user")
   fullName      String
+  portfolio     Portfolio?
   refreshToken  String?  // hashed refresh token
   createdAt     DateTime @default(now())
   updatedAt     DateTime @default(now()) @updatedAt
-  portfolio     Portfolio?
 }
 
 model Portfolio {
