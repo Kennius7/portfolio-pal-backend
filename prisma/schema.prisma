@@ -28,17 +28,17 @@ model User {
 
 model Portfolio {
   id          String   @id @default(cuid())
-  title       String
-  bio         String?
-  theme       String?
+  title       String   @default("Portfolio Title")
+  theme       String?  @default("")
   published   Boolean  @default(false)
-  tagline     String?
-  greeting    String?
-  bioShort    String?
-  bioLong     String?
-  whatsapp    String?
-  email       String?
-  avatarUrl   String?
+  tagline     String?  @default("Portfolio Tagline")
+  greeting    String?  @default("Hello")
+  bioShort    String?  @default("Short bio")
+  bioLong     String?  @default("Long bio")
+  whatsapp    String?  @default("Whatsapp number: eg. +2348012345678")
+  email       String?  @default("My email address: eg. johndoe@portfoliopal.com")
+  avatarUrl   String?  @default("https://images.unsplash.com/photo-1534528741775-53994a69daeb")
+  resumeUrl   String?  @default("My resume link")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
 
