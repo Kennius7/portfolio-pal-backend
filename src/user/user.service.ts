@@ -13,8 +13,10 @@ export class UserService {
       select: {
         id: true,
         email: true,
+        username: true,
         fullName: true,
         createdAt: true,
+        portfolio: true,
       },
     });
 
@@ -30,8 +32,10 @@ export class UserService {
       select: {
         id: true,
         email: true,
+        username: true,
         fullName: true,
         createdAt: true,
+        portfolio: true,
       },
     });
   }

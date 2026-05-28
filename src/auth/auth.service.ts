@@ -17,8 +17,16 @@ export class AuthService {
       where: { email: dto.email },
     });
 
+    const existingUsername = await this.prisma.user.findUnique({
+      where: { username: dto.username },
+    });
+
     if (existing) {
       throw new UnauthorizedException('User already exists');
+    }
+
+    if (existingUsername) {
+      throw new UnauthorizedException('Username already exists');
     }
 
     const hashedPassword = await bcrypt.hash(dto.password, 10);
