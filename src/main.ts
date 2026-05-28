@@ -31,7 +31,8 @@ async function bootstrap() {
       'http://localhost:3000',
       'http://localhost:8080',
       'http://localhost:5173',
-      'https://yourfrontend.com',
+      'http://localhost:4440',
+      'https://portfolio-pal-app1.netlify.app',
     ],
     credentials: true,
   });
