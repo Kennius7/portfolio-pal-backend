@@ -9,6 +9,7 @@ import {
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
+import { Portfolio } from '@prisma/client';
 
 interface AuthenticatedRequest extends Request {
   user: {
@@ -48,8 +49,6 @@ export class UserController {
       userId: user.id,
       email: user.email,
       fullName: user.fullName,
-      // accessToken,
-      // refreshToken: '',
     };
   }
 
@@ -60,6 +59,9 @@ export class UserController {
       userId: string;
       email: string;
       fullName: string;
+      username: string;
+      portfolio: Portfolio | null;
+      createdAt: Date;
     }[]
   > {
     const users = await this.userService.getAllUsers();
@@ -69,6 +71,9 @@ export class UserController {
         userId: user.id,
         email: user.email,
         fullName: user.fullName,
+        username: user.username,
+        portfolio: user.portfolio,
+        createdAt: user.createdAt,
       };
     });
   }
