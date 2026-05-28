@@ -1,12 +1,12 @@
-import { PrismaClient } from '@prisma/client';
+// import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
-async function main() {
-  await prisma.user.updateMany({
-    where: { username: null },
-    data: { username: 'default_user' },
-  });
-}
+// async function main() {
+//   await prisma.user.updateMany({
+//     where: { username: null },
+//     data: { username: 'default_user' },
+//   });
+// }
 
-main().finally(() => prisma.$disconnect());
+// main().finally(() => prisma.$disconnect());
