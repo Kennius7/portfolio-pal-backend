@@ -37,6 +37,12 @@ export class AuthService {
         username: dto.username,
         fullName: dto.fullName,
         password: hashedPassword,
+        portfolio: {
+          create: {},
+        },
+      },
+      include: {
+        portfolio: true,
       },
     });
 

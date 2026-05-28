@@ -15,15 +15,15 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(cuid())
-  email         String   @unique
+  id            String      @id @default(cuid())
+  email         String      @unique
   password      String
-  username      String   @unique @default("portfolio-pal-user")
+  username      String      @unique @default("portfolio-pal-user")
   fullName      String
   portfolio     Portfolio?
-  refreshToken  String?  // hashed refresh token
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @default(now()) @updatedAt
+  refreshToken  String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now()) @updatedAt
 }
 
 model Portfolio {
