@@ -27,15 +27,6 @@ export class UserController {
   @Get('get-current-user')
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Get current user' })
-  // @ApiOkResponse({
-  //   type: [
-  //     {
-  //       userId: 'string',
-  //       email: 'string',
-  //       fullName: 'string',
-  //     },
-  //   ],
-  // })
   async getProfile(@Req() req: AuthenticatedRequest): Promise<{
     userId: string;
     email: string;

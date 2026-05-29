@@ -7,6 +7,9 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { ProjectsModule } from './projects/projects.module';
+import { SkillsService } from './skills/skills.service';
+import { SkillsController } from './skills/skills.controller';
+import { SkillsModule } from './skills/skills.module';
 
 @Module({
   imports: [
@@ -16,8 +19,9 @@ import { ProjectsModule } from './projects/projects.module';
     UserModule,
     ConfigModule.forRoot({ isGlobal: true }),
     ProjectsModule,
+    SkillsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, SkillsController],
+  providers: [AppService, SkillsService],
 })
 export class AppModule {}

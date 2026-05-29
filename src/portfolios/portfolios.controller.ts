@@ -13,6 +13,7 @@ import {
   ApiBearerAuth,
   ApiOperation,
   ApiParam,
+  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { PortfolioDto } from './dto/portfolio.dto';
@@ -27,6 +28,14 @@ export class PortfoliosController {
   @ApiBearerAuth('JWT-auth')
   @Post('create')
   @ApiOperation({ summary: 'Create portfolio' })
+  @ApiResponse({
+    status: 201,
+    description: 'Portfolio created successfully',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Invalid input',
+  })
   create(@Body() body: PortfolioDto) {
     return this.portfoliosService.createPortfolio(body);
   }
@@ -39,6 +48,14 @@ export class PortfoliosController {
     name: 'id',
     description: 'The unique ID of the portfolio',
     type: String,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Portfolio found successfully',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Portfolio not found',
   })
   findOne(@Param('id') id: string) {
     return this.portfoliosService.getPortfolioById(id);
@@ -59,6 +76,14 @@ export class PortfoliosController {
     description: 'The unique ID of the portfolio to update',
     type: String,
   })
+  @ApiResponse({
+    status: 200,
+    description: 'Portfolio updated successfully',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Portfolio not found',
+  })
   update(
     @Param('id') id: string,
     @Body() body: Partial<PortfolioDto>, // Uses Partial so fields are optional in the update payload
@@ -74,6 +99,14 @@ export class PortfoliosController {
     name: 'id',
     description: 'The unique ID of the portfolio to delete',
     type: String,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Portfolio deleted successfully',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Portfolio not found',
   })
   remove(@Param('id') id: string) {
     return this.portfoliosService.deletePortfolio(id);
