@@ -20,6 +20,16 @@ export class PortfoliosService {
         avatarUrl: data.avatarUrl,
         resumeUrl: data.resumeUrl,
         userId: data.userId,
+        skills: {
+          create: [],
+        },
+        projects: {
+          create: [],
+        },
+      },
+      include: {
+        skills: true,
+        projects: true,
       },
     });
   }

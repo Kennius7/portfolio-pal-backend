@@ -522,25 +522,26 @@ model Portfolio {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
 
-  userId      String @unique
-  user        User @relation(fields: [userId], references: [id])
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
 
   projects    Project[]
   skills      Skill[]
 }
 
 model Project {
-  id          String   @id @default(cuid())
-  title       String
-  description String?
-  imageUrl    String?
-  liveUrl     String?
-  githubUrl   String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
+  id                String      @id @default(cuid())
+  title             String      @default("Project Title")
+  description       String      @default("This is a description for the project")
+  imageUrl          String      @default("https://images.unsplash.com/photo-1534528741775-53994a69daeb")
+  liveUrl           String?
+  projectCreatedAt  DateTime    @default(now())
+  projectEndAt      DateTime    @default(now())
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @default(now()) @updatedAt
 
-  portfolioId String
-  portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
+  portfolioId       String
+  portfolio         Portfolio   @relation(fields: [portfolioId], references: [id])
 }
 
 model Skill {
@@ -554,7 +555,7 @@ model Skill {
   updatedAt   DateTime        @default(now()) @updatedAt
 
   portfolioId String
-  portfolio   Portfolio @relation(fields: [portfolioId], references: [id])
+  portfolio   Portfolio       @relation(fields: [portfolioId], references: [id])
 }
 
 

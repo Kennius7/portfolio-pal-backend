@@ -36,17 +36,23 @@ export class ProjectDto {
   liveUrl?: string;
 
   @ApiProperty({
-    example: 'https://github.com/username/repo-name',
-    required: false,
-  })
-  @IsOptional()
-  @IsString()
-  githubUrl?: string;
-
-  @ApiProperty({
     example: '2084c24f-9a4a-447f-a5d9-f802a65b6879',
     required: true,
   })
   @IsString()
   portfolioId: string;
+
+  @ApiProperty({
+    example: '2084-03-21T00:00:00.000Z',
+    required: true,
+  })
+  @IsString()
+  projectCreatedAt: Date;
+
+  @ApiProperty({
+    example: '2084-03-21T00:00:00.000Z',
+    required: true,
+  })
+  @IsString()
+  projectEndAt: Date;
 }

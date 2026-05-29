@@ -7,6 +7,16 @@ export class SkillsService {
   constructor(private prisma: PrismaService) {}
 
   async createSkill(data: SkillsDto) {
+    const portfolio = await this.prisma.portfolio.findUnique({
+      where: { id: data.portfolioId },
+    });
+
+    if (!portfolio) {
+      throw new NotFoundException(
+        `Portfolio with ID ${data.portfolioId} not found`,
+      );
+    }
+
     return this.prisma.skill.create({
       data: {
         name: data.name,
