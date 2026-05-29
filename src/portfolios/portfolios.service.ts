@@ -21,10 +21,10 @@ export class PortfoliosService {
         resumeUrl: data.resumeUrl,
         userId: data.userId,
         skills: {
-          create: [],
+          create: {},
         },
         projects: {
-          create: [],
+          create: {},
         },
       },
       include: {
