@@ -536,7 +536,7 @@ model Project {
   imageUrl          String      @default("https://images.unsplash.com/photo-1534528741775-53994a69daeb")
   liveUrl           String?
   projectCreatedAt  DateTime    @default(now())
-  projectEndAt      DateTime    @default(now())
+  projectEndAt      String?     @default("ongoing")
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @default(now()) @updatedAt
 

@@ -54,5 +54,5 @@ export class ProjectDto {
     required: true,
   })
   @IsString()
-  projectEndAt: Date;
+  projectEndAt: string;
 }
