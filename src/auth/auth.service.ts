@@ -38,7 +38,9 @@ export class AuthService {
         fullName: dto.fullName,
         password: hashedPassword,
         portfolio: {
-          create: {},
+          create: {
+            slug: `${dto.username}-${Date.now()}`,
+          },
         },
       },
       include: {

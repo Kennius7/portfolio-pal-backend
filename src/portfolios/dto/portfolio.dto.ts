@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
 export class PortfolioDto {
   @ApiProperty({
@@ -81,6 +81,21 @@ export class PortfolioDto {
   @IsOptional()
   @IsString()
   resumeUrl?: string;
+
+  @ApiProperty({
+    example: 'johndoe-dev',
+    required: true,
+  })
+  @IsString()
+  slug: string;
+
+  @ApiProperty({
+    example: 'false',
+    required: false,
+  })
+  @IsOptional()
+  @IsBoolean()
+  isPublished?: boolean;
 
   @ApiProperty({
     required: true,

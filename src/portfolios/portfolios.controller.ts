@@ -111,4 +111,23 @@ export class PortfoliosController {
   remove(@Param('id') id: string) {
     return this.portfoliosService.deletePortfolio(id);
   }
+
+  @Get('public/:slug')
+  @ApiOperation({ summary: 'Get a single portfolio by slug' })
+  @ApiParam({
+    name: 'slug',
+    description: 'The unique slug of the portfolio',
+    type: String,
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Portfolio fetched successfully',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Portfolio not found',
+  })
+  findPublished(@Param('slug') slug: string) {
+    return this.portfoliosService.findPublishedPortfolio(slug);
+  }
 }

@@ -10,6 +10,8 @@ export class PortfoliosService {
     return this.prisma.portfolio.create({
       data: {
         title: data.title,
+        slug: data.slug,
+        isPublished: data.isPublished,
         theme: data.theme,
         tagline: data.tagline,
         greeting: data.greeting,
@@ -40,6 +42,8 @@ export class PortfoliosService {
       select: {
         id: true,
         title: true,
+        slug: true,
+        isPublished: true,
         theme: true,
         tagline: true,
         greeting: true,
@@ -67,6 +71,8 @@ export class PortfoliosService {
       select: {
         id: true,
         title: true,
+        slug: true,
+        isPublished: true,
         theme: true,
         tagline: true,
         greeting: true,
@@ -94,6 +100,8 @@ export class PortfoliosService {
       where: { id },
       data: {
         title: data.title,
+        slug: data.slug,
+        isPublished: data.isPublished,
         theme: data.theme,
         tagline: data.tagline,
         greeting: data.greeting,
@@ -115,6 +123,19 @@ export class PortfoliosService {
 
     return this.prisma.portfolio.delete({
       where: { id },
+    });
+  }
+
+  async findPublishedPortfolio(slug: string) {
+    return this.prisma.portfolio.findFirst({
+      where: {
+        slug,
+        isPublished: true,
+      },
+      include: {
+        skills: true,
+        projects: true,
+      },
     });
   }
 }

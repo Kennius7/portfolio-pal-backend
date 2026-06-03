@@ -508,9 +508,10 @@ model User {
 
 model Portfolio {
   id          String   @id @default(cuid())
+  slug        String   @unique
+  isPublished Boolean  @default(false)
   title       String   @default("My Portfolio")
   theme       String?  @default("")
-  published   Boolean  @default(false)
   tagline     String?  @default("Frontend Engineer with a love for Visual Design")
   greeting    String?  @default("Hello")
   bioShort    String?  @default("I am a frontend developer with over 5 years of experience.")
@@ -518,7 +519,7 @@ model Portfolio {
   whatsapp    String?  @default("+2348012345678")
   email       String?  @default("johndoe@portfoliopal.com")
   avatarUrl   String?  @default("https://images.unsplash.com/photo-1534528741775-53994a69daeb")
-  resumeUrl   String?  @default("My resume link")
+  resumeUrl   String?  @default("")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
 
