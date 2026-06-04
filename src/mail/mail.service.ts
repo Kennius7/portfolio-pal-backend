@@ -1,15 +1,21 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { MailerService } from '@nestjs-modules/mailer';
+// import { MailerService } from '@nestjs-modules/mailer';
+import { Resend } from 'resend';
 
 @Injectable()
 export class MailService {
   private readonly logger = new Logger(MailService.name);
+  private readonly resend: Resend;
 
-  constructor(private readonly mailerService: MailerService) {}
+  // constructor(private readonly mailerService: MailerService) {}
+  constructor() {
+    this.resend = new Resend(process.env.RESEND_API_KEY);
+  }
 
   async sendPasswordResetEmail(email: string, resetUrl: string): Promise<void> {
     try {
-      await this.mailerService.sendMail({
+      await this.resend.emails.send({
+        from: 'Portfolio Pal <onboarding@resend.dev>', // change later to your domain
         to: email,
         subject: 'Reset Your Password',
         html: `
@@ -63,7 +69,8 @@ export class MailService {
 
   async sendPasswordChangedEmail(email: string): Promise<void> {
     try {
-      await this.mailerService.sendMail({
+      await this.resend.emails.send({
+        from: 'Portfolio Pal <onboarding@resend.dev>',
         to: email,
         subject: 'Password Changed Successfully',
         html: `
@@ -90,7 +97,8 @@ export class MailService {
   }
 
   async sendWelcomeEmail(email: string, firstName: string): Promise<void> {
-    await this.mailerService.sendMail({
+    await this.resend.emails.send({
+      from: 'Portfolio Pal <onboarding@resend.dev>',
       to: email,
       subject: 'Welcome to Portfolio Pal',
       html: `
