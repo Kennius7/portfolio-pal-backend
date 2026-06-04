@@ -51,7 +51,7 @@ export class AuthController {
     description: 'User does not exist',
   })
   async forgotPassword(@Body() dto: ForgotPasswordDto) {
-    await this.auth.forgotPassword(dto.email);
+    await this.auth.forgotPassword(dto);
 
     return {
       message: 'If an account exists, a reset email has been sent.',
@@ -69,7 +69,7 @@ export class AuthController {
     description: 'Invalid or expired token',
   })
   async resetPassword(@Body() dto: ResetPasswordDto) {
-    return this.auth.resetPassword(dto.token, dto.password);
+    return this.auth.resetPassword(dto);
   }
 
   @Post('refresh')

@@ -10,6 +10,8 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import * as crypto from 'crypto';
 import { MailService } from 'src/mail/mail.service';
+import { ForgotPasswordDto } from './dto/forgotpassword.dto';
+import { ResetPasswordDto } from './dto/resetpassword.dto';
 
 @Injectable()
 export class AuthService {
@@ -89,9 +91,9 @@ export class AuthService {
     };
   }
 
-  async forgotPassword(email: string) {
+  async forgotPassword(dto: ForgotPasswordDto) {
     const user = await this.prisma.user.findUnique({
-      where: { email },
+      where: { email: dto.email },
     });
 
     if (!user) {
@@ -123,8 +125,11 @@ export class AuthService {
     );
   }
 
-  async resetPassword(token: string, password: string) {
-    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+  async resetPassword(dto: ResetPasswordDto) {
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(dto.token)
+      .digest('hex');
 
     const user = await this.prisma.user.findFirst({
       where: {
@@ -139,7 +144,7 @@ export class AuthService {
       throw new BadRequestException('Invalid or expired token');
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(dto.password, 10);
 
     await this.prisma.user.update({
       where: { id: user.id },
