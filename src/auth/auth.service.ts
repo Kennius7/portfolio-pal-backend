@@ -114,8 +114,13 @@ export class AuthService {
     });
 
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+    const resetLocalHostUrl = `${process.env.FRONTEND_URL_LOCALHOST}/reset-password?token=${resetToken}`;
 
     await this.mailService.sendPasswordResetEmail(user.email, resetUrl);
+    await this.mailService.sendPasswordResetEmail(
+      user.email,
+      resetLocalHostUrl,
+    );
   }
 
   async resetPassword(token: string, password: string) {
