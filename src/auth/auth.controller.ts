@@ -4,6 +4,8 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ForgotPasswordDto } from './dto/forgotpassword.dto';
+import { ResetPasswordDto } from './dto/resetpassword.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -36,6 +38,38 @@ export class AuthController {
   })
   login(@Body() dto: LoginDto) {
     return this.auth.login(dto);
+  }
+
+  @Post('forgot-password')
+  @ApiOperation({ summary: 'Forgot password' })
+  @ApiResponse({
+    status: 200,
+    description: 'Password reset email sent successfully',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'User does not exist',
+  })
+  async forgotPassword(@Body() dto: ForgotPasswordDto) {
+    await this.auth.forgotPassword(dto.email);
+
+    return {
+      message: 'If an account exists, a reset email has been sent.',
+    };
+  }
+
+  @Post('reset-password')
+  @ApiOperation({ summary: 'Reset password' })
+  @ApiResponse({
+    status: 200,
+    description: 'Password reset successful',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Invalid or expired token',
+  })
+  async resetPassword(@Body() dto: ResetPasswordDto) {
+    return this.auth.resetPassword(dto.token, dto.password);
   }
 
   @Post('refresh')
