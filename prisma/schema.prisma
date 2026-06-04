@@ -495,15 +495,17 @@ datasource db {
 }
 
 model User {
-  id            String      @id @default(cuid())
-  email         String      @unique
-  password      String
-  username      String      @unique @default("portfolio-pal-user")
-  fullName      String
-  portfolio     Portfolio?
-  refreshToken  String?
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @default(now()) @updatedAt
+  id                   String      @id @default(cuid())
+  email                String      @unique
+  password             String
+  username             String      @unique @default("portfolio-pal-user")
+  fullName             String
+  resetPasswordToken   String?
+  resetPasswordExpires DateTime?
+  portfolio            Portfolio?
+  refreshToken         String?
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @default(now()) @updatedAt
 }
 
 model Portfolio {
