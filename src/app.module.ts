@@ -14,11 +14,11 @@ import { QueueModule } from './queue/queue.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     PrismaModule,
     PortfoliosModule,
     AuthModule,
     UserModule,
-    ConfigModule.forRoot({ isGlobal: true }),
     ProjectsModule,
     SkillsModule,
     QueueModule,
