@@ -10,6 +10,7 @@ import { ProjectsModule } from './projects/projects.module';
 import { SkillsService } from './skills/skills.service';
 import { SkillsController } from './skills/skills.controller';
 import { SkillsModule } from './skills/skills.module';
+import { QueueModule } from './queue/queue.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { SkillsModule } from './skills/skills.module';
     ConfigModule.forRoot({ isGlobal: true }),
     ProjectsModule,
     SkillsModule,
+    QueueModule,
   ],
   controllers: [AppController, SkillsController],
   providers: [AppService, SkillsService],

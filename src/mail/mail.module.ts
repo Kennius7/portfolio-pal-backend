@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-// import { MailerModule } from '@nestjs-modules/mailer';
 import { MailService } from './mail.service';
-// import * as nodemailer from 'nodemailer';
+import { BullModule } from '@nestjs/bullmq';
+import { MailQueueService } from 'src/mail/mail-queue.service';
+import { MailProcessor } from 'src/mail/mail.processor';
 
 console.log({
   host: process.env.MAIL_HOST,
@@ -10,43 +11,13 @@ console.log({
   password: process.env.MAIL_PASSWORD,
 });
 
-// const transporter = nodemailer.createTransport({
-//   host: process.env.MAIL_HOST,
-//   port: Number(process.env.MAIL_PORT),
-//   secure: false,
-//   auth: {
-//     user: process.env.MAIL_USER,
-//     pass: process.env.MAIL_PASSWORD,
-//   },
-// });
-
-// transporter
-//   .verify()
-//   .then(() => {
-//     console.log('SMTP server reachable');
-//   })
-//   .catch((error: unknown) => {
-//     console.log('SMTP server not reachable', error);
-//   });
-
 @Module({
   imports: [
-    // MailerModule.forRoot({
-    //   transport: {
-    //     host: process.env.MAIL_HOST,
-    //     port: Number(process.env.MAIL_PORT),
-    //     secure: false,
-    //     auth: {
-    //       user: process.env.MAIL_USER,
-    //       pass: process.env.MAIL_PASSWORD,
-    //     },
-    //   },
-    //   defaults: {
-    //     from: `"Portfolio Pal" <${process.env.MAIL_USER}>`,
-    //   },
-    // }),
+    BullModule.registerQueue({
+      name: 'email',
+    }),
   ],
-  providers: [MailService],
-  exports: [MailService],
+  providers: [MailService, MailQueueService, MailProcessor],
+  exports: [MailService, MailQueueService],
 })
 export class MailModule {}

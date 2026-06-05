@@ -12,6 +12,7 @@ import * as crypto from 'crypto';
 import { MailService } from 'src/mail/mail.service';
 import { ForgotPasswordDto } from './dto/forgotpassword.dto';
 import { ResetPasswordDto } from './dto/resetpassword.dto';
+import { MailQueueService } from 'src/mail/mail-queue.service';
 
 @Injectable()
 export class AuthService {
@@ -19,6 +20,7 @@ export class AuthService {
     private prisma: PrismaService,
     private jwt: JwtService,
     private mailService: MailService,
+    private mailQueueService: MailQueueService,
   ) {}
 
   async register(dto: RegisterDto) {
@@ -116,13 +118,14 @@ export class AuthService {
     });
 
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
-    const resetLocalHostUrl = `${process.env.FRONTEND_URL_LOCALHOST}/reset-password?token=${resetToken}`;
+    // const resetLocalHostUrl = `${process.env.FRONTEND_URL_LOCALHOST}/reset-password?token=${resetToken}`;
 
-    await this.mailService.sendPasswordResetEmail(user.email, resetUrl);
-    await this.mailService.sendPasswordResetEmail(
-      user.email,
-      resetLocalHostUrl,
-    );
+    // await this.mailService.sendPasswordResetEmail(user.email, resetUrl);
+    await this.mailQueueService.queuePasswordReset(user.email, resetUrl);
+    // await this.mailService.sendPasswordResetEmail(
+    //   user.email,
+    //   resetLocalHostUrl,
+    // );
   }
 
   async resetPassword(dto: ResetPasswordDto) {
